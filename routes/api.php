@@ -2,7 +2,18 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Auth;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::get('/home', function () {
+    return response()->json(['error' => 'Already authenticated'], 200);
+});
+
+Route::prefix('v1')->group(function () {
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/users/authenticated', function (Request $request) {
+            return new UserResource(Auth::user());
+        });
+    });
+});
+
