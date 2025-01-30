@@ -17,5 +17,4 @@ jobs:
           server: 147.79.103.53
           username: ${{ secrets.FTP_USERNAME_STAGING }}
           password: ${{ secrets.FTP_PASSWORD_STAGING }}
-          local-dir: ./dist/
           server-dir: ./
