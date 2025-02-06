@@ -94,4 +94,24 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return in_array(self::ROLES_LIST['ADMIN'], $this->roles);
     }
+
+    public function hasVerifiedEmail()
+    {
+        return $this->email_verified_at != null;
+    }
+
+    public function hasVerifiedID()
+    {
+        return $this->IDDocument_verified_at != null;
+    }
+
+    public function hasVerifiedPhone()
+    {
+        return $this->phone_verified_at != null;
+    }
+
+    public function isOnboarded()
+    {
+        return $this->hasVerifiedEmail() && $this->hasVerifiedPhone() && $this->hasVerifiedID();
+    }
 }
