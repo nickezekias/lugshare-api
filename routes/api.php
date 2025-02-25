@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SpaceOfferListingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Resources\UserResource;
@@ -15,6 +16,8 @@ Route::prefix('v1')->group(function () {
         Route::get('/users/authenticated', function (Request $request) {
             return new UserResource(Auth::user());
         });
+
+        Route::apiResource('/listings/space-offers', SpaceOfferListingController::class);
 
         Route::post('/profile/verifications/id-document', [ProfileController::class, 'verifyIDDocument']);
     });
