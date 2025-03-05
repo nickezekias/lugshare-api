@@ -51,6 +51,7 @@ class SpaceRequestListingController extends Controller
 
         $obj = new Obj;
 
+        $obj->budget = $request->input('budget');
         $obj->description = $request->input('description');
         $obj->flight_arrival = $request->input('flightArrival');
         $obj->flight_departure = $request->input('flightDeparture');
@@ -90,6 +91,7 @@ class SpaceRequestListingController extends Controller
 
         Gate::authorize('update', $obj);
 
+        $obj->budget = $request->input('budget');
         $obj->description = $request->input('description');
         $obj->flight_arrival = $request->input('flightArrival');
         $obj->flight_departure = $request->input('flightDeparture');

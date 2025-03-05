@@ -24,6 +24,7 @@ class SpaceRequestListingResource extends JsonResource
 
         return [
             'id' => $this->id,
+            'budget' => $this->budget,
             'description' => $this->description,
             'flightArrival' => $this->flight_arrival,
             'flightDeparture' => $this->flight_departure,

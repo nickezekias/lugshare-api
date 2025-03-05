@@ -28,6 +28,7 @@ class SpaceRequestStoreRequest extends FormRequest
     private function store(): array
     {
         return [
+            'budget' => 'required|string|max:30',
             'description' => 'required|string|max:255',
             'flightArrival' => 'required|string|max:255',
             'flightDeparture' => 'required|string|max:255',

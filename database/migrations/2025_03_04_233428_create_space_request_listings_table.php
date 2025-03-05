@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('space_request_listings', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('budget');
             $table->string('description');
             $table->string('flight_arrival');
             $table->string('flight_departure');
