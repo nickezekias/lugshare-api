@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SpaceOfferListingController;
+use App\Http\Controllers\SpaceRequestListingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Resources\UserResource;
@@ -18,6 +19,8 @@ Route::prefix('v1')->group(function () {
         });
 
         Route::apiResource('/listings/space-offers', SpaceOfferListingController::class);
+
+        Route::apiResource('/listings/space-requests', SpaceRequestListingController::class);
 
         Route::post('/profile/verifications/id-document', [ProfileController::class, 'verifyIDDocument']);
     });
