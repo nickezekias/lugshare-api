@@ -37,7 +37,7 @@ class SpaceRequestListingResource extends JsonResource
             'user' => $user,
             'userId' => $this->user_id,
             'weight' => $this->weight,
-            'weightUnit' => $this->weightUnit,
+            'weightUnit' => $this->weight_unit,
             
         ];
     }
