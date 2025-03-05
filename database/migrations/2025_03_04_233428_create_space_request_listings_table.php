@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('flight_departure');
             $table->boolean('is_active')->default(true);
             $table->string('item_types');
-            $table->string('shipment_date');
+            $table->date('shipment_date');
             $table->string('shipment_date_flexibility');
             $table->string('shipper_type');
             $table->string('special_instructions')->nullable();
