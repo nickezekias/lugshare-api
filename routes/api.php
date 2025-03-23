@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SpaceBookingRequestController;
 use App\Http\Controllers\SpaceOfferListingController;
 use App\Http\Controllers\SpaceRequestListingController;
 use Illuminate\Http\Request;
@@ -21,6 +22,10 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('/listings/space-offers', SpaceOfferListingController::class);
 
         Route::apiResource('/listings/space-requests', SpaceRequestListingController::class);
+
+        Route::put('/space-booking-requests/{id}/reject', [SpaceBookingRequestController::class, 'rejectBooking']);
+        Route::put('/space-booking-requests/{id}/accept', [SpaceBookingRequestController::class, 'acceptBooking']);
+        Route::apiResource('/space-booking-requests', SpaceBookingRequestController::class);
 
         Route::post('/profile/verifications/id-document', [ProfileController::class, 'verifyIDDocument']);
     });
