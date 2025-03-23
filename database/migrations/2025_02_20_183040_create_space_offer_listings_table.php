@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('item_restrictions')->nullable();
             $table->string('price_per_unit');
             $table->text('special_instructions')->nullable();
+            $table->string('status');
             $table->string('user_id', 36);
             $table->string('weightUnit');
             $table->timestamps();

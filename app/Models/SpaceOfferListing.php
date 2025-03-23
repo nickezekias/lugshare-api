@@ -11,6 +11,12 @@ class SpaceOfferListing extends Model
 {
     use HasUuids, SoftDeletes;
 
+    const STATUSES = [
+        'BOOKED' => 'booked',
+        'AVAILABLE' => 'available',
+        'UNAVAILABLE' => 'unavailable'
+    ];
+
     /**
      * Get the attributes that should be cast.
      *
@@ -29,5 +35,20 @@ class SpaceOfferListing extends Model
     {
         $user = User::findOrFail($this->user_id);
         return new UserResource($user);
+    }
+
+    public function isBooked()
+    {
+        return $this->status === self::STATUSES['BOOKED'];
+    }
+
+    public function isAvailable()
+    {
+        return $this->status === self::STATUSES['AVAILABLE'];
+    }
+
+    public function isUnavailable()
+    {
+        return $this->status === self::STATUSES['UNAVAILABLE'];
     }
 }

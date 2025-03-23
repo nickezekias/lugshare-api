@@ -67,7 +67,9 @@ class SpaceOfferListingController extends Controller
         $obj->item_restrictions = $request->itemRestrictions;
         $obj->price_per_unit = $request->pricePerUnit;
         $obj->special_instructions = $request->specialInstructions;
-        $obj->user_id = $request->userId;
+        $obj->status = Obj::STATUSES['AVAILABLE'];
+        //FIXME: check $request->userId == $request->user()->id if not send appropriate error like 403 forbidden error
+        $obj->user_id = $request->user()->id;
         $obj->weightUnit = $request->weightUnit;
 
         $obj->save();
