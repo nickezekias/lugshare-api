@@ -22,11 +22,12 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('/listings/space-offers', SpaceOfferListingController::class);
 
         Route::apiResource('/listings/space-requests', SpaceRequestListingController::class);
-
-        Route::put('/space-booking-requests/{id}/reject', [SpaceBookingRequestController::class, 'rejectBooking']);
-        Route::put('/space-booking-requests/{id}/accept', [SpaceBookingRequestController::class, 'acceptBooking']);
+        
+        Route::get('/space-booking-requests/current-user-and-space-offer', [SpaceBookingRequestController::class, 'showForCurrentUserAndSpaceOffer']);
+        Route::put('/space-booking-requests/{id}/reject', [SpaceOfferListingController::class, 'rejectBooking']);
+        Route::put('/space-booking-requests/{id}/accept', [SpaceOfferListingController::class, 'acceptBooking']);
         Route::apiResource('/space-booking-requests', SpaceBookingRequestController::class);
-
+        
         Route::post('/profile/verifications/id-document', [ProfileController::class, 'verifyIDDocument']);
     });
 });
