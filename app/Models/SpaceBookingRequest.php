@@ -12,11 +12,11 @@ class SpaceBookingRequest extends Model
     use HasUuids, SoftDeletes;
 
     const STATUSES = [
-        'OPEN' => 'open',
         'ACCEPTED' => 'accepted',
-        'REJECTED' => 'rejected',
+        'COMPLETED' => 'completed',
         'CANCELLED' => 'cancelled',
-        'COMPLETED' => 'completed'
+        'PENDING' => 'pending',
+        'REJECTED' => 'rejected'
     ];
 
     public function user()

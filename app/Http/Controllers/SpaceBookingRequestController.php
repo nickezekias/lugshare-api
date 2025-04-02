@@ -16,7 +16,7 @@ class SpaceBookingRequestController extends Controller
     public function index(Request $request)
     {
         $objects = [];
-        $objectsQuery = Obj::where('id', '>', 0);
+        $objectsQuery = Obj::where('space_offer_id', $request->spaceOfferId);
         if ($request->has('sortBy')) {
             $orderByArray = explode(',', $request->sortBy);
             $orderByOrientation = explode(',', $request->sortDesc);
@@ -64,7 +64,7 @@ class SpaceBookingRequestController extends Controller
         $obj->items_pickup_location = $request->input('itemsPickupLocation');
         $obj->shipment_items = $request->input('shipmentItems');
         $obj->space_offer_id = $request->input('spaceOfferId');
-        $obj->status = Obj::STATUSES['OPEN'];
+        $obj->status = Obj::STATUSES['PENDING'];
         $obj->user_id = $request->user()->id;
 
         $obj->save();
@@ -81,6 +81,17 @@ class SpaceBookingRequestController extends Controller
 
         Gate::authorize('view', $obj);
 
+        return new ObjResource($obj);
+    }
+
+    /**
+     * Display the specified resource for current user
+     */
+    public function showForCurrentUserAndSpaceOffer(Request $request)
+    {
+        $obj = Obj::where([['user_id', $request->user()->id], ['space_offer_id', $request->spaceOfferId]])->firstOrFail();
+
+        Gate::authorize('view', $obj);
         return new ObjResource($obj);
     }
 
@@ -126,31 +137,5 @@ class SpaceBookingRequestController extends Controller
         } else {
             return response()->json(['success' => false], 400);
         }
-    }
-
-    public function rejectBooking(string $id) {
-        $obj = Obj::findOrFail($id);
-
-        Gate::authorize('update', $obj);
-
-        $obj->status = Obj::STATUSES['REJECTED'];
-        $obj->save();
-
-        return new ObjResource($obj);
-    }
-
-    public function acceptBooking(string $id) {
-        $obj = Obj::findOrFail($id);
-
-        Gate::authorize('update', $obj);
-
-        $obj->status = Obj::STATUSES['ACCEPTED'];
-        $obj->save();
-
-        $spaceOfferListing = SpaceOfferListing::where('id', $obj->space_offer_id)->first();
-        $spaceOfferListing->status = SpaceOfferListing::STATUSES['BOOKED'];
-        $spaceOfferListing->save();
-
-        return new ObjResource($obj);
     }
 }
