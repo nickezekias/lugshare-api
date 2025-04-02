@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Resources\SpaceOfferListingResource as ObjResource;
 use App\Models\SpaceOfferListing as Obj;
+use App\Models\SpaceBookingRequest;
+use App\Http\Resources\SpaceBookingRequestResource;
 use App\Http\Requests\SpaceOfferStoreRequest;
 
 
@@ -133,5 +135,31 @@ class SpaceOfferListingController extends Controller
         } else {
             return response()->json(['success' => false], 400);
         }
+    }
+
+    public function rejectBooking(string $id) {
+        $spaceBookingRequest = SpaceBookingRequest::findOrFail($id);
+        $spaceOfferListing = Obj::where('id', $spaceBookingRequest->space_offer_id)->firstOrFail();
+
+        Gate::authorize('rejectBooking', [$spaceOfferListing, $spaceBookingRequest]);
+
+        $spaceBookingRequest->status = Obj::STATUSES['REJECTED'];
+        $spaceBookingRequest->save();
+
+        return new SpaceBookingRequestResource($spaceBookingRequest);
+    }
+
+    public function acceptBooking(string $id) {
+        $spaceBookingRequest = SpaceBookingRequest::findOrFail($id);
+        $spaceOfferListing = Obj::where('id', $spaceBookingRequest->space_offer_id)->firstOrFail();
+        Gate::authorize('acceptBooking', [$spaceOfferListing, $spaceBookingRequest]);
+
+        $spaceBookingRequest->status = SpaceBookingRequest::STATUSES['ACCEPTED'];
+        $spaceBookingRequest->save();
+
+        $spaceOfferListing->status = Obj::STATUSES['BOOKED'];
+        $spaceOfferListing->save();
+
+        return new SpaceBookingRequestResource($spaceBookingRequest);
     }
 }

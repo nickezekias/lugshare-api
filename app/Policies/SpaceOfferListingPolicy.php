@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\SpaceBookingRequest;
 use App\Models\SpaceOfferListing;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -62,5 +63,27 @@ class SpaceOfferListingPolicy
     public function forceDelete(User $user, SpaceOfferListing $spaceOfferListing): bool
     {
         return false;
+    }
+
+    /**
+     * Determine whether the user can accept the booking.
+     */
+    public function acceptBooking(User $user, SpaceOfferListing $spaceOfferListing, SpaceBookingRequest $spaceBookingRequest): bool
+    {
+        return $user->isActive()
+        && $user->id == $spaceOfferListing->user_id
+        && $spaceBookingRequest->space_offer_id == $spaceOfferListing->id;
+        // && $user->isOnboarded();
+    }
+
+    /**
+     * Determine whether the user can reject the booking.
+     */
+    public function rejectBooking(User $user, SpaceOfferListing $spaceOfferListing, SpaceBookingRequest $spaceBookingRequest): bool
+    {
+        return $user->isActive()
+        && $user->id == $spaceOfferListing->user_id
+        && $spaceBookingRequest->space_offer_id == $spaceOfferListing->id;
+        // && $user->isOnboarded();
     }
 }
