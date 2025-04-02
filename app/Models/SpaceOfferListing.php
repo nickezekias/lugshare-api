@@ -14,6 +14,7 @@ class SpaceOfferListing extends Model
     const STATUSES = [
         'BOOKED' => 'booked',
         'AVAILABLE' => 'available',
+        'REJECTED' => 'rejected',
         'UNAVAILABLE' => 'unavailable'
     ];
 
